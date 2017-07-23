@@ -38,34 +38,37 @@
         </div>
     </div>
 </div>
-<script>
-    var socket = io.connect('http://localhost:8890');
-    socket.on('message', function (data) {
-        data = jQuery.parseJSON(data);
-        console.log(data.user);
-        $( "#messages" ).append( "<strong>"+data.user+":</strong><p>"+data.message+"</p>" );
-      });
-    $(".send-msg").on('click',function(e){
-        alert("calling it");
-        e.preventDefault();
-        var token = $("input[name='_token']").val();
-        var user = $("input[name='user']").val();
-        var msg = $(".msg").val();
-        console.log(token+user+msg);
-        if(msg != ''){
-            $.ajax({
-                type: "POST",
-                url: '{!! URL::to("sendmessage") !!}',
-                dataType: "json",
-                data: {'_token':token,'message':msg,'user':user},
-                success:function(data){
-                    console.log(data);
-                    $(".msg").val('');
-                }
-            });
-        }else{
-            alert("Please Add Message.");
-        }
-    })
-</script>
+
+@endsection
+
+@section('page-scripts')
+    <script>
+        var socket = io.connect('http://localhost:8888');
+        socket.on('message', function (data) {
+            data = jQuery.parseJSON(data);
+            console.log(data.user);
+            $( "#messages" ).append( "<strong>"+data.user+":</strong><p>"+data.message+"</p>" );
+        });
+        $(".send-msg").on('click',function(e){
+            e.preventDefault();
+            var token = $("input[name='_token']").val();
+            var user = $("input[name='user']").val();
+            var msg = $(".msg").val();
+            console.log(token+user+msg);
+            if(msg != ''){
+                $.ajax({
+                    type: "POST",
+                    url: '{!! URL::to("sendmessage") !!}',
+                    dataType: "json",
+                    data: {'_token':token,'message':msg,'user':user},
+                    success:function(data){
+                        console.log(data);
+                        $(".msg").val('');
+                    }
+                });
+            }else{
+                alert("Please Add Message.");
+            }
+        })
+    </script>
 @endsection

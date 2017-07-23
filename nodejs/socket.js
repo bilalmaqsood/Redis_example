@@ -3,7 +3,7 @@
   var io = require('socket.io')(server);
   var redis = require('ioredis');
    
-  server.listen(8890);
+  server.listen(8888);
   io.on('connection', function (socket) {
    
     var redisClient = redis.createClient();
