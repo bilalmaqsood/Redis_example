@@ -45,11 +45,13 @@
         console.log(data.user);
         $( "#messages" ).append( "<strong>"+data.user+":</strong><p>"+data.message+"</p>" );
       });
-    $(".send-msg").click(function(e){
+    $(".send-msg").on('click',function(e){
+        alert("calling it");
         e.preventDefault();
         var token = $("input[name='_token']").val();
         var user = $("input[name='user']").val();
         var msg = $(".msg").val();
+        console.log(token+user+msg);
         if(msg != ''){
             $.ajax({
                 type: "POST",
